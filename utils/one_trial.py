@@ -98,7 +98,7 @@ class LitModel(object):
             gradient_clip_val=self.__clip_value,
             gradient_clip_algorithm=self.__clip_algo,
             logger=self.register_logger(self.__logtype),
-            accelerator="gpu",
+            accelerator=self.hparams.get("device", "gpu"),
             max_epochs=self.__max_epochs,
             callbacks=[early_stoping, *ckpts],
             enable_progress_bar=self.__enable_progress_bar,
