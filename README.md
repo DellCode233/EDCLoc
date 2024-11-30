@@ -17,3 +17,15 @@ You can install them by running the following command:
 ```bash
 pip install -r requirements.txt
 ```
+
+## Usage
+python EDCLoc_predict.py -h
+
+usage: EDCLoc_predict.py [-h] --input INPUT [--output OUTPUT]
+
+EDCLoc: A Prediction Model for mRNA Subcellular Localization
+
+optional arguments:
+  -h, --help       show this help message and exit
+  --input INPUT    Query mRNA sequences in fasta format
+  --output OUTPUT  The path where you want to save the prediction results
