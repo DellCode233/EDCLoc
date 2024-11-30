@@ -28,12 +28,19 @@ To use the EDCLoc model, run the following command:
 python EDCLoc_predict.py -h
 ```
 
-**usage**: `EDCLoc_predict.py` [-h] --input INPUT [--output OUTPUT]
+```
+usage: EDCLoc_predict.py [-h] --input INPUT [--output OUTPUT]
+                         [--use_all_checkpoints USE_ALL_CHECKPOINTS]
+                         [--device DEVICE]
 
-**EDCLoc**: A Prediction Model for mRNA Subcellular Localization
+EDCLoc: A Prediction Model for mRNA Subcellular Localization
 
-**optional arguments**:
-- `-h, --help`       : show this help message and exit
-- `--input INPUT`    : Query mRNA sequences in fasta format
-- `--output OUTPUT`  : The path where you want to save the prediction results
+optional arguments:
+  -h, --help            show this help message and exit
+  --input INPUT         Query mRNA sequences in fasta format
+  --output OUTPUT       The path where you want to save the prediction results
+  --use_all_checkpoints USE_ALL_CHECKPOINTS
+                        Flag to use all checkpoints (default: False)
+  --device DEVICE       gpu or cpu (default: gpu)
+```
 
