@@ -27,12 +27,14 @@ def sigmoid_focal_loss(
     return loss
 
 
-def load_model():
+def load_model(device="gpu"):
     from utils.one_trial import LitModel
     from models.EDCLoc import classifier
 
     model_params = classifier.get_model_params()
+
     hparams = classifier.get_hparams()
+    hparams["device"] = "gpu"
     hparams["loss_func"] = sigmoid_focal_loss
     hparams["loss_func_hparams"] = dict(
         alpha=[0.42, 0.01, 0.76, 0.64, 0.63, 0.66], omega=[1.3, 1.0, 0.9, 1.4, 1.2, 1.4]
@@ -112,6 +114,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--use_all_checkpoints", type=bool, default=False, help="Flag to use all checkpoints (default: False)"
     )
+    parser.add_argument("--device", type=str, default="gpu", help="gpu or cpu (default: gpu)")
     args = parser.parse_args()
-    model = load_model()
+    model = load_model(args.device)
     model_predict(model, args.input, args.output, args.use_all_checkpoints)
