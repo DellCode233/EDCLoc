@@ -1,6 +1,7 @@
 import argparse
 import os
 
+
 def sigmoid_focal_loss(
     inputs,
     targets,
@@ -68,18 +69,21 @@ def fasta2dataset(fasta_path):
     )
 
 
-def model_predict(input_path, output_path):
-    model = load_model()
+def model_predict(model, input_path, output_path, use_all_checkpoints):
     import pandas as pd
     import numpy as np
 
     testset, ids = fasta2dataset(input_path)
     all_y_score = []
-    for j in range(6):
-        ckpt_path = os.path.join("save_ckpts", f"fold0", f"S{j}.ckpt")
-        y_score = model.predict_proba(testset, ckpt_path=ckpt_path)
-        all_y_score.append(np.array(y_score[:, j]))
-    all_y_score = np.stack(all_y_score, axis=1).round(4)
+    if use_all_checkpoints:
+        for j in range(6):
+            ckpt_path = os.path.join("save_ckpts", f"fold0", f"S{j}.ckpt")
+            y_score = model.predict_proba(testset, ckpt_path=ckpt_path)
+            all_y_score.append(np.array(y_score[:, j]))
+        all_y_score = np.stack(all_y_score, axis=1).round(4)
+    else:
+        ckpt_path = os.path.join("save_ckpts", f"fold0", f"S0.ckpt")
+        all_y_score = np.array(model.predict_proba(testset, ckpt_path=ckpt_path)).round(4)
     all_y_pred = np.where(all_y_score > 0.5, 1, 0)
     if not os.path.isdir(output_path):
         os.makedirs(output_path)
@@ -94,6 +98,7 @@ def model_predict(input_path, output_path):
         index=ids,
     ).to_csv(os.path.join(output_path, "pred.csv"))
 
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="EDCLoc: A Prediction Model for mRNA Subcellular Localization")
     parser.add_argument("--input", type=str, required=True, help="Query mRNA sequences in fasta format")
@@ -104,6 +109,9 @@ if __name__ == "__main__":
         help="The path where you want to save the prediction results",
         default="output_result",
     )
+    parser.add_argument(
+        "--use_all_checkpoints", type=bool, default=False, help="Flag to use all checkpoints (default: False)"
+    )
     args = parser.parse_args()
-
-    model_predict(args.input, args.output)
+    model = load_model()
+    model_predict(model, args.input, args.output, args.use_all_checkpoints)
