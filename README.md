@@ -4,13 +4,14 @@ EDCLoc is a novel multi-label classifier designed to predict the subcellular loc
 ## Requirements
 
 To use this project, you need to install the following libraries:
-
-- torch                     2.0.0+cu118
-- pandas                    2.1.1                   
-- pytorch-lightning         2.0.8                    
-- pytorch-metric-learning   1.7.3 
-- pandas                    2.1.1
-- multimethod               1.9.1
+lightning==2.0.9.post0
+multimethod==1.9.1
+numpy==1.24.4
+pandas==2.0.3
+scikit_learn==1.3.2
+torch==2.0.0+cu118
+torch==2.0.1
+torchmetrics==1.2.0
 
 You can install them by running the following command:
 
