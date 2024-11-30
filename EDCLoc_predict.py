@@ -94,14 +94,6 @@ def model_predict(input_path, output_path):
         index=ids,
     ).to_csv(os.path.join(output_path, "pred.csv"))
 
-
-def main(input_path, output_path):
-    print(f"Input path: {input_path}")
-    print(f"Output path: {output_path}")
-    # 在这里添加您的EDCLoc模型处理代码
-    # 例如，加载数据、进行预测、保存结果等
-
-
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="EDCLoc: A Prediction Model for mRNA Subcellular Localization")
     parser.add_argument("--input", type=str, required=True, help="Query mRNA sequences in fasta format")
