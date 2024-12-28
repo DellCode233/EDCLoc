@@ -112,7 +112,7 @@ if __name__ == "__main__":
         default="output_result",
     )
     parser.add_argument(
-        "--use_all_checkpoints", type=bool, default=False, help="Flag to use all checkpoints (default: False)"
+        "--use_all_checkpoints", type=bool, default=True, help="Flag to use all checkpoints (default: True)"
     )
     parser.add_argument("--device", type=str, default="gpu", help="gpu or cpu (default: gpu)")
     args = parser.parse_args()
